@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrmExt", "DrmExt\DrmExt.vcproj", "{EC0280C9-64C3-4A68-8EF9-0BBBE62C504D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrmExtPS", "DrmExt\DrmExtPS.vcproj", "{B059BDAB-18CD-4D7F-BC2F-1D05038572AA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EC0280C9-64C3-4A68-8EF9-0BBBE62C504D} = {EC0280C9-64C3-4A68-8EF9-0BBBE62C504D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC0280C9-64C3-4A68-8EF9-0BBBE62C504D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EC0280C9-64C3-4A68-8EF9-0BBBE62C504D}.Debug|Win32.Build.0 = Debug|Win32
+		{EC0280C9-64C3-4A68-8EF9-0BBBE62C504D}.Release|Win32.ActiveCfg = Release|Win32
+		{EC0280C9-64C3-4A68-8EF9-0BBBE62C504D}.Release|Win32.Build.0 = Release|Win32
+		{B059BDAB-18CD-4D7F-BC2F-1D05038572AA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B059BDAB-18CD-4D7F-BC2F-1D05038572AA}.Release|Win32.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

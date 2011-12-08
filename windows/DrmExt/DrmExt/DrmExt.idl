@@ -1,0 +1,35 @@
+// DrmExt.idl : DrmExt の IDL ソース
+//
+
+// このファイルは、タイプ ライブラリ (DrmExt.tlb) およびマーシャリング コードを
+// 作成するために MIDL ツールによって処理されます。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(54A741ED-0196-40DB-B32C-946B919F6CB4),
+	helpstring("IDrmShlExt インターフェイス"),
+	pointer_default(unique)
+]
+interface IDrmShlExt : IDispatch{
+};
+[
+	uuid(F09A2DD9-A1EC-4018-B62B-63E7118F0D97),
+	version(1.0),
+	helpstring("DrmExt 1.0 タイプ ライブラリ")
+]
+library DrmExtLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	[
+		uuid(A41074A0-9C6E-49F5-9100-9CA8660C9933),
+		helpstring("DrmShlExt Class")
+	]
+	coclass DrmShlExt
+	{
+		[default] interface IDrmShlExt;
+	};
+};
