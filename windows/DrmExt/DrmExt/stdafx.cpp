@@ -1,5 +1,5 @@
-// stdafx.cpp : 標準インクルード DrmExt.pch のみを
-// 含むソース ファイルは、プリコンパイル済みヘッダーになります。
-// stdafx.obj にはプリコンパイル済み型情報が含まれます。
+// stdafx.cpp : source file that includes just the standard includes
+// DrmExt.pch will be the pre-compiled header
+// stdafx.obj will contain the pre-compiled type information
 
 #include "stdafx.h"

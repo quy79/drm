@@ -1,4 +1,4 @@
-// DrmExt.cpp : DLL エクスポートの実装です。
+// DrmExt.cpp : Implementation of DLL Exports.
 
 
 #include "stdafx.h"
@@ -10,7 +10,7 @@ class CDrmExtModule : public CAtlDllModuleT< CDrmExtModule >
 {
 public :
 	DECLARE_LIBID(LIBID_DrmExtLib)
-	//DECLARE_REGISTRY_APPID_RESOURCEID(IDR_DRMEXT, "{A07CB2D7-C3C9-4416-A56A-E420AD9E4E37}")
+	//DECLARE_REGISTRY_APPID_RESOURCEID(IDR_DRMEXT, "{B287D714-5E91-400E-8B77-2C575C4BF113}")
 };
 
 CDrmExtModule _AtlModule;
@@ -20,7 +20,7 @@ CDrmExtModule _AtlModule;
 #pragma managed(push, off)
 #endif
 
-// DLL エントリ ポイント
+// DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
 	hInstance;
@@ -34,30 +34,30 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 
 
 
-// DLL を OLE によってアンロードできるようにするかどうかを指定します。
+// Used to determine whether the DLL can be unloaded by OLE
 STDAPI DllCanUnloadNow(void)
 {
     return _AtlModule.DllCanUnloadNow();
 }
 
 
-// 要求された型のオブジェクトを作成するクラス ファクトリを返します。
+// Returns a class factory to create an object of the requested type
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
     return _AtlModule.DllGetClassObject(rclsid, riid, ppv);
 }
 
 
-// DllRegisterServer - エントリをシステム レジストリに追加します。
+// DllRegisterServer - Adds entries to the system registry
 STDAPI DllRegisterServer(void)
 {
-    // オブジェクト、タイプ ライブラリおよびタイプ ライブラリ内のすべてのインターフェイスを登録します
+    // registers object, typelib and all interfaces in typelib
     HRESULT hr = _AtlModule.DllRegisterServer();
 	return hr;
 }
 
 
-// DllUnregisterServer - エントリをレジストリから削除します。
+// DllUnregisterServer - Removes entries from the system registry
 STDAPI DllUnregisterServer(void)
 {
 	HRESULT hr = _AtlModule.DllUnregisterServer();

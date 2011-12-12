@@ -1,4 +1,4 @@
-; DrmExt.def : モジュール パラメータを宣言します。
+; DrmExt.def : Declares the module parameters.
 
 LIBRARY      "DrmExt.DLL"
 

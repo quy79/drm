@@ -1,6 +1,6 @@
-// stdafx.h : 標準のシステム インクルード ファイルのインクルード ファイル、または
-// 参照回数が多く、かつあまり変更されない、プロジェクト専用のインクルード ファイル
-// を記述します。
+// stdafx.h : include file for standard system include files,
+// or project specific include files that are used frequently,
+// but are changed infrequently
 
 #pragma once
 
@@ -8,28 +8,35 @@
 #define STRICT
 #endif
 
-// 下で指定された定義の前に対象プラットフォームを指定しなければならない場合、以下の定義を変更してください。
-// 異なるプラットフォームに対応する値に関する最新情報については、MSDN を参照してください。
-#ifndef WINVER				// Windows XP 以降のバージョンに固有の機能の使用を許可します。
-#define WINVER 0x0501		// これを Windows の他のバージョン向けに適切な値に変更してください。
+// The following macros define the minimum required platform.  The minimum required platform
+// is the earliest version of Windows, Internet Explorer etc. that has the necessary features to run 
+// your application.  The macros work by enabling all features available on platform versions up to and 
+// including the version specified.
+
+// Modify the following defines if you have to target a platform prior to the ones specified below.
+// Refer to MSDN for the latest info on corresponding values for different platforms.
+#ifndef WINVER                          // Specifies that the minimum required platform is Windows Vista.
+#define WINVER 0x0600           // Change this to the appropriate value to target other versions of Windows.
 #endif
 
-#ifndef _WIN32_WINNT		// Windows XP 以降のバージョンに固有の機能の使用を許可します。                   
-#define _WIN32_WINNT 0x0501	// これを Windows の他のバージョン向けに適切な値に変更してください。
-#endif						
-
-#ifndef _WIN32_WINDOWS		// Windows 98 以降のバージョンに固有の機能の使用を許可します。
-#define _WIN32_WINDOWS 0x0410 // これを Windows Me またはそれ以降のバージョン向けに適切な値に変更してください。
+#ifndef _WIN32_WINNT            // Specifies that the minimum required platform is Windows Vista.
+#define _WIN32_WINNT 0x0600     // Change this to the appropriate value to target other versions of Windows.
 #endif
 
-#ifndef _WIN32_IE			// IE 6.0 以降のバージョンに固有の機能の使用を許可します。
-#define _WIN32_IE 0x0600	// これを IE. の他のバージョン向けに適切な値に変更してください。
+#ifndef _WIN32_WINDOWS          // Specifies that the minimum required platform is Windows 98.
+#define _WIN32_WINDOWS 0x0410 // Change this to the appropriate value to target Windows Me or later.
+#endif
+
+#ifndef _WIN32_IE                       // Specifies that the minimum required platform is Internet Explorer 7.0.
+#define _WIN32_IE 0x0700        // Change this to the appropriate value to target other versions of IE.
 #endif
 
 #define _ATL_APARTMENT_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// 一部の CString コンストラクタは明示的です。
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
+#define _ATL_NO_UUIDOF
+
 
 
 #include "resource.h"
@@ -37,6 +44,13 @@
 #include <atlcom.h>
 
 using namespace ATL;
-//Shell
-#include <shlobj.h>
+
+//shell
 #include <comdef.h>
+#include <shlobj.h>
+
+////cryptopp
+//#include <cryptopp/pch.h>
+//#include <cryptopp/hex.h>
+//#include <cryptopp/default.h>
+//#include <cryptopp/files.h>

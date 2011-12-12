@@ -2,7 +2,7 @@ HKCR
 {
 	NoRemove CLSID
 	{
-		ForceRemove {A41074A0-9C6E-49F5-9100-9CA8660C9933} = s 'DrmShlExt Class'
+		ForceRemove {4650B2E6-1F31-4515-9A85-558B245611B3} = s 'DrmShlExt Class'
 		{
 			InprocServer32 = s '%MODULE%'
 			{
@@ -10,14 +10,15 @@ HKCR
 			}
 		}
 	}
-	NoRemove txtfile
-    {
-        NoRemove ShellEx
-        {
-            NoRemove ContextMenuHandlers
-            {
-                ForceRemove SimpleShlExt = s '{A41074A0-9C6E-49F5-9100-9CA8660C9933}'
-            }
-        }
-    }
+	NoRemove drmfile
+	{
+		NoRemove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove DrmShlExt = s '{4650B2E6-1F31-4515-9A85-558B245611B3}'
+			}
+		}
+	}
 }
+

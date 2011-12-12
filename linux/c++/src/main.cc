@@ -45,10 +45,11 @@ using std::string;
 using std::cout;
 using std::endl; 
 
-/*
-void EncryptFile(const char *in, const char *out, const char *passPhrase);
-void DecryptFile(const char *in, const char *out, const char *passPhrase);
 
+
+void AES_CTR_Encrypt(const char *hexKey, const char *hexIV, const char *infile, const char *outfile);
+SecByteBlock HexDecodeString(const char *hex);
+/*
 BYTE Aes_sBox[] =  {0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
              0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,
              0xb7,0xfd,0x93,0x26,0x36,0x3f,0xf7,0xcc,0x34,0xa5,0xe5,0xf1,0x71,0xd8,0x31,0x15,
@@ -151,7 +152,7 @@ static string BitGen(int howManyBits) {
     return ByteGen(byteLength);
 }
 
-/*
+
 static string SHA256_Hash(string inputString) {
     // returns a SHA-256 encoded hash of the inputString in binary
     // always returns 256 bits
@@ -164,7 +165,7 @@ static string SHA256_Hash(string inputString) {
 
     return hashString;
 } 
-*/
+
 
 static void EncryptFileAES(istream& inFile, ostream& outFile, string key, string iv, bool &err, string &errMsg) {
 	// will encrypt the file at filenameIn to filenameOut using AES
@@ -217,11 +218,17 @@ static void DecryptFileAES(istream& inFile, ostream& outFile, string key, string
 int main(int argc, char *argv[])
 {
 
-	string key = "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4";
-	string iv = "f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff";
-	const char* keyStr = "N67C9PpD,uqZRG(MxeQWzCdmzqezJGo8tnMk[4s(FpHkdWtY.t";
+	//string key = "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4";
+	//string key = "N67C9PpD,uqZRG(MxeQWzCdmzqezJGo8tnMk[4s(FpHkdWtY.t";
+	//string iv = "f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff";
+	string keyStr = "N67C9PpD,uqZRG(MxeQWzCdmzqezJGo8tnMk[4s(FpHkdWtY.t";	
+	//byte key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
+	//byte iv[ CryptoPP::AES::BLOCKSIZE ];
 	string drmExt = ".drm";
 	string dirSep = "/";
+	//string key = "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4";	
+	string iv = "f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff";// Initialization vector data (iv)
+	//string keyStr = "N67C9PpD,uqZRG(MxeQWzCdmzqezJGo8tnMk[4s(FpHkdWtY.t";//cryptography password
 
 	try
 	{
@@ -229,177 +236,11 @@ int main(int argc, char *argv[])
 		
 		bool err;
         string errMsg;
-		AutoSeededRandomPool rng;
-
-		string key(AES::BLOCKSIZE, 0);
-		string iv(AES::BLOCKSIZE, 0);// Initialization Vector (IV)
-		const char* keyStr = "N67C9PpD,uqZRG(MxeQWzCdmzqezJGo8tnMk[4s(FpHkdWtY.t";
-		//byte key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
-		//byte iv[ CryptoPP::AES::BLOCKSIZE ];
+		AutoSeededRandomPool rng;		
 		
-
 		// digest key
-		StringSource(keyStr, true, new HashFilter(*(new SHA256), new ArraySink((unsigned char*)key.c_str(), AES::BLOCKSIZE))); 
-
-		//Create a random IV with default sizes (16)
-		//rng.GenerateBlock((unsigned char*)iv.c_str(), AES::BLOCKSIZE);
-		//rng.GenerateBlock((unsigned char*)key.c_str(), AES::DEFAULT_KEYLENGTH);
-		
-
-		//char const *zipFile = "drm.zip";
-		//char const *iFile = argv[1];
-		//char const *encFile = argv[2];
-		//char const *zipFile = argv[3];
-		
-		char const *destDir = argv[1];
-
-		string zipDir = destDir;
-		string zipFileName = destDir;
-		string zipExt = ".zip";	
-		zipFileName.append(zipExt);
-		cout << zipFileName << endl;
-	
-
-		//get directory file list
-		vector<string> files = vector<string>();
-		getdir(zipDir,files);
-
-		//prepare zip file
-		CZipArchive zip;
-		zip.Open((char*)zipFileName.c_str(), CZipArchive::zipCreate);    
-
-		for (unsigned int i = 0; i < files.size();i++) {
-			string dotStr (".");
-			string dotdotStr ("..");
-			if ((dotStr.compare(files[i]) != 0) && (dotdotStr.compare(files[i]) != 0)) {
-
-
-
-
-				//cout << files[i] << endl;
-				
-				char *iFile;
-				char *encFile;
-				
-				size_t found;
-				string drmFileName;
-				string iFileName;
-							
-				drmFileName.append(zipDir);
-				drmFileName.append(dirSep);
-				iFileName.append(zipDir);
-				iFileName.append(dirSep);
-				
-				found = files[i].find_last_of(".");
-				drmFileName.append(files[i].substr(0,found));
-				drmFileName.append(drmExt);
-				iFileName.append(files[i]);
-				
-
-				iFile = (char*)iFileName.c_str();
-				encFile = (char*)drmFileName.c_str();
-				//cout << iFileName << endl;
-				
-
-
-				///////////////////////////
-				// Now encrypt it using AES method
-				// First open the infile
-				ifstream infile(iFile, ios::binary); //must open file in binary mode
-
-				// Now the outfile
-				ofstream outfile(encFile, ios::binary);
-				//ofstream outfile2(recoveredFile,ios::binary);
-
-				// start encryption
-				EncryptFileAES(infile, outfile, key, (const char*)iv.c_str(), err, errMsg);			
-				if (err) {
-					cout << errMsg << endl;
-					return -1;
-				}
-
-				infile.close();
-				outfile.close();
-
-				// Add ecrypted file to Zip Archive
-				if (stat(encFile, &results) == 0){	
-					zip.AddNewFile(encFile, -1, false);
-					//remove( iFile );					
-
-				}else{
-					// An error occurred
-					cout << "0" << endl;
-					return -1;
-				}
-
-				///////////////////////////
-
-				/*
-				///////////////////////////
-				// Now encrypt it using AES method in CTR mode
-				int result;
-				string cmd = "cryptest.exe ae ";
-				string space = " ";
-				
-				cmd.append(key);
-				cmd.append(space);
-				cmd.append(iv);
-				cmd.append(space);
-				cmd.append(iFileName);
-				cmd.append(space);
-				cmd.append(drmFileName);
-				//cout << cmd << endl;
-
-				//cout << iFileName << endl;
-				//cout << drmFileName << endl;
-				result = system((char*)cmd.c_str());
-				
-				//AES_CTR_Encrypt(key, iv, iFile, encFile);
-				//EncryptFile(iFile, encFile, keyStr);	
-				// Add ecrypted file to Zip Archive
-				
-				if (stat(encFile, &results) == 0){	
-					zip.AddNewFile(encFile, -1, false);
-					//remove( iFile );					
-
-				}else{
-					// An error occurred
-					cout << "0" << endl;
-					return -1;
-				}
-				
-
-				///////////////////////////
-				
-				
-				
-				//encrypt file and save as .drm	
-				//EncryptFile(iFile, encFile, keyStr);
-				*/
-
-
-			
-			
-			}
-
-				
-						
-					
-			
-			
-		}
-
-		zip.Close();
-		//rmdir(destDir);
-		cout << zipFileName << endl;
-		
-		//cout << "Passphrase: " << cin.getline(passPhrase, MAX_PHRASE_LENGTH) << endl;
-		//cout << "Input file: " << cin.getline(iFile, MAX_PHRASE_LENGTH) << endl;
-		//cout << "Output(encrypted) file: " << cin.getline(oFile, MAX_PHRASE_LENGTH) << endl;
-		
-		//EncryptFile(iFile, encFile, passPhrase);
-		//AES_CTR_Encrypt(Aes_sBox, Aes_rCon, iFile, encFile);
-		//DecryptFile(encFile, decFile, passPhrase);
+		string key = SHA256_Hash(keyStr);
+		cout << key << endl;
 
 		
 
@@ -416,7 +257,7 @@ int main(int argc, char *argv[])
 	}
 }
 
-/*
+
 void AES_CTR_Encrypt(const char *hexKey, const char *hexIV, const char *infile, const char *outfile)
 {
 	SecByteBlock key = HexDecodeString(hexKey);
@@ -432,8 +273,7 @@ SecByteBlock HexDecodeString(const char *hex)
 	ss.Get(result, result.size());
 	return result;
 }
-
-
+/*
 void EncryptFile(const char *in, const char *out, const char *passPhrase)
 {
 	FileSource f(in, true, new DefaultEncryptorWithMAC(passPhrase, new FileSink(out)));	

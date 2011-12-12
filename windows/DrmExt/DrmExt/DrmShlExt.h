@@ -1,14 +1,18 @@
-// DrmShlExt.h : CDrmShlExt の宣言
+// DrmShlExt.h : Declaration of the CDrmShlExt
 
 #pragma once
-#include "resource.h"       // メイン シンボル
+#include "resource.h"       // main symbols
 
 #include "DrmExt.h"
 
+//We'll use a list of strings to store the filenames selected:
+#include <string>
+#include <list>
+typedef std::list<std::wstring> string_list;
 
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
-#error "DCOM の完全サポートを含んでいない Windows Mobile プラットフォームのような Windows CE プラットフォームでは、単一スレッド COM オブジェクトは正しくサポートされていません。ATL が単一スレッド COM オブジェクトの作成をサポートすること、およびその単一スレッド COM オブジェクトの実装の使用を許可することを強制するには、_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA を定義してください。ご使用の rgs ファイルのスレッド モデルは 'Free' に設定されており、DCOM Windows CE 以外のプラットフォームでサポートされる唯一のスレッド モデルと設定されていました。"
+#error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
 #endif
 
 
@@ -18,19 +22,22 @@
 class ATL_NO_VTABLE CDrmShlExt :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CDrmShlExt, &CLSID_DrmShlExt>,
-	//public IDrmShlExt
+	public IShellExtInit,
+	public IContextMenu
+	
 {
 public:
-	CDrmShlExt()
-	{
-	}
+	CDrmShlExt();
+	~CDrmShlExt();
+	
 
 DECLARE_REGISTRY_RESOURCEID(IDR_DRMSHLEXT)
 
 DECLARE_NOT_AGGREGATABLE(CDrmShlExt)
 
 BEGIN_COM_MAP(CDrmShlExt)
-	//COM_INTERFACE_ENTRY(IDrmShlExt)
+	COM_INTERFACE_ENTRY(IShellExtInit)
+	COM_INTERFACE_ENTRY(IContextMenu)
 END_COM_MAP()
 
 
@@ -47,6 +54,15 @@ END_COM_MAP()
 	}
 
 public:
+	//for IShellExtInit:
+	STDMETHODIMP Initialize(LPCITEMIDLIST, LPDATAOBJECT, HKEY);
+
+	//for IContextMenu:
+	STDMETHODIMP GetCommandString(UINT_PTR, UINT, UINT*, LPSTR, UINT cchMax);
+	STDMETHODIMP InvokeCommand(LPCMINVOKECOMMANDINFO);
+	STDMETHODIMP QueryContextMenu(HMENU, UINT, UINT, UINT, UINT);
+protected:
+	string_list fileList;
 
 };
 
