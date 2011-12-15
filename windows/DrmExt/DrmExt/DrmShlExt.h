@@ -5,6 +5,27 @@
 
 #include "DrmExt.h"
 
+#define CRYPTOPP_DEFAULT_NO_DLL
+// Crypto++ Includes
+#include "cryptopp/config.h"
+#include "cryptopp/hex.h"
+#include "cryptopp/default.h"
+#include "cryptopp/files.h"
+#include "cryptopp/cryptlib.h"
+#include "cryptopp/modes.h"
+#include "cryptopp/osrng.h"
+#include "cryptopp/filters.h"
+#include "cryptopp/aes.h"
+#include "cryptopp/des.h"
+#include "cryptopp/blowfish.h" 
+
+using namespace CryptoPP;
+
+#define PASSKEY L"N67C9PpD,uqZRG(MxeQWzCdmzqezJGo8tnMk[4s(FpHkdWtY.t"
+
+void EncryptFile(const char *in, const char *out, const char *passPhrase);
+void DecryptFile(const char *in, const char *out, const char *passPhrase);
+
 //We'll use a list of strings to store the filenames selected:
 #include <string>
 #include <list>

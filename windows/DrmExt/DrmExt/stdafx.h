@@ -49,8 +49,12 @@ using namespace ATL;
 #include <comdef.h>
 #include <shlobj.h>
 
-////cryptopp
-//#include <cryptopp/pch.h>
-//#include <cryptopp/hex.h>
-//#include <cryptopp/default.h>
-//#include <cryptopp/files.h>
+// Crypto++ Library
+#ifdef _DEBUG
+#  pragma comment ( lib, "cryptlibd" )
+#else
+#  pragma comment ( lib, "cryptlib" )
+#endif
+
+
+

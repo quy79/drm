@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0366 */
-/* at Mon Dec 12 13:43:58 2011
+/* at Wed Dec 14 19:49:18 2011
  */
 /* Compiler settings for .\DrmExt.idl:
     Oicf, W1, Zp8, env=Win64 (32b run)

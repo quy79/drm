@@ -71,47 +71,50 @@ HRESULT CDrmShlExt::QueryContextMenu(HMENU hmenu, UINT uMenuIndex, UINT uidFirst
 
 
 	unsigned long originalFirst = uidFirstCmd; //we'll compute how many items we added from this.
+	HBITMAP hBitmap = (HBITMAP)LoadImage((HMODULE)_AtlBaseModule.m_hInst,
+		MAKEINTRESOURCE(IDB_PAGE_UNLOCK) , IMAGE_BITMAP, 16, 16, 0);
 
-	//for simple, top level menus, use code like this:
-	/*
-	InsertMenu(hmenu,uMenuIndex,MF_BYPOSITION,uidFirstCmd++,L"Shell Cryptography");
+	InsertMenu(hmenu,uMenuIndex,MF_BYPOSITION,uidFirstCmd++,L"Decrypt...");
+	SetMenuItemBitmaps(hmenu, uMenuIndex, MF_BITMAP | MF_BYPOSITION, hBitmap, NULL);
 	uMenuIndex++; //this corresponds to the top-level menu index
-	*/
-
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////
 	//if you just increment the values, return the number of added items.
 	//return MAKE_HRESULT(SEVERITY_SUCCESS,FACILITY_NULL,uidFirstCmd-originalFirst);
 
 
 	//sub-menus:
 
-	MENUITEMINFO mii;
-	HMENU hm = CreatePopupMenu();
+	////MENUITEMINFO mii;
+	////HMENU hm = CreatePopupMenu();
 	//now get the recent contacts and add items for each:
 
-	AppendMenu(hm,MF_STRING,uidFirstCmd++,L"Decrypt");
-	AppendMenu(hm,MF_STRING,uidFirstCmd++,L"About...");
+	////AppendMenu(hm,MF_STRING,uidFirstCmd++,L"Decrypt");
+	////AppendMenu(hm,MF_STRING,uidFirstCmd++,L"About...");
 	//AppendMenu(hm,MF_STRING,uidFirstCmd++,L"the third menu");
 
-	mii.cbSize = sizeof(MENUITEMINFO);
-	mii.fMask = MIIM_TYPE | MIIM_SUBMENU;
-	mii.fType = MFT_STRING;
-	mii.hSubMenu = hm;
-	mii.dwTypeData = L"DRM Decrypter...";
-	mii.cch = (unsigned int)strlen("DRM Decrypter...");
+	//mii.cbSize = sizeof(MENUITEMINFO);
+	//mii.fMask = MIIM_TYPE | MIIM_SUBMENU;
+	//mii.fType = MFT_STRING;
+	//mii.hSubMenu = hm;
+	//mii.dwTypeData = L"DRM Decrypter...";
+	//mii.cch = (unsigned int)strlen("DRM Decrypter...");
 
 
 	//HBITMAP hBitmap = (HBITMAP)LoadImage((HMODULE)_AtlBaseModule.m_hInst,
-    //   _T("C:\Users\quy\Documents\dev\needs\needs\icon\24x24\page_unlock_ico.ico") , IMAGE_BITMAP, 16, 16, 0);
+	//	MAKEINTRESOURCE(IDB_PAGE_UNLOCK) , IMAGE_BITMAP, 24, 24, 0);
 
-	InsertMenuItem(hmenu,uMenuIndex++,MF_STRING | MF_BYPOSITION,&mii);
+	//InsertMenuItem(hmenu,uMenuIndex++,MF_STRING | MF_BYPOSITION,&mii);
 	//SetMenuItemBitmaps(hmenu, uMenuIndex, MF_BITMAP | MF_BYCOMMAND, hBitmap, NULL);
 	
 
 	//if you have fancy bitmaps, you would set them here, something like this:
 	//if(NULL != this->m_hHandBmp)
 	//	SetMenuItemBitmaps(hmenu,uMenuIndex,MF_BYPOSITION,m_hHandBmp,NULL);
+	///////////////////////////////////////////////////////////////////////////////////
 
-	//You could also add other top level menu items here...
+	//You could also add other tp level menu items here...
 
 	//The return value seems to tell the shell how many items with commands we've added (leaf items).
 	return MAKE_HRESULT(SEVERITY_SUCCESS,FACILITY_NULL,uidFirstCmd-originalFirst);
@@ -135,10 +138,10 @@ HRESULT CDrmShlExt::GetCommandString(UINT_PTR idCmd, UINT uFlags, UINT *pwReserv
 				::wcscpy(hlpText,L"About the DRM Decrypter");
 		}
 
-		if(!idMatch) //then the idCmd did not belong to us.
+		if(!idMatch) 
 			return E_INVALIDARG;
 
-		if(uFlags & GCS_UNICODE) //then pszName is actually wchars, not chars.
+		if(uFlags & GCS_UNICODE) //pszName is actually wchars, not chars.
 			::wcsncpy(reinterpret_cast<wchar_t*>(pszName),hlpText,cchMax);
 		else
 			::wcstombs(pszName,hlpText,cchMax);
@@ -166,12 +169,34 @@ HRESULT CDrmShlExt::InvokeCommand(LPCMINVOKECOMMANDINFO pCmdInfo)
 		//msg += digits;
 		//msg += L" on the following files:\n";
 		string_list::iterator i;
-		for(i=this->fileList.begin(); i!=this->fileList.end(); i++)
-			msg += (*i) + L"\n";
+		//for(i=this->fileList.begin(); i!=this->fileList.end(); i++)
+		//	msg += (*i) + L"\n";
+		for(i=this->fileList.begin(); i!=this->fileList.end(); i++){
+			//decrypt handle
+			//output decrypted file		
+			char *encFile = (char*)(*i).c_str();
+			std::wstring passkey = L"N67C9PpD,uqZRG(MxeQWzCdmzqezJGo8tnMk[4s(FpHkdWtY.t";
+			std::wstring decFile;	
+			decFile = (*i).substr(0, (*i).length() - 4);
+			DecryptFile(encFile, (char*)decFile.c_str(), (char*)passkey.c_str());
+			::MessageBox(0,L"File was successful decrypted !", L"Rights Network Decrypter",0);
+			return S_OK;
+			
+		}
 
 		::MessageBox(0,msg.c_str(),L"Rights Network Decrypter",0);
 		return S_OK;
 	}
 
 	return E_INVALIDARG;
+}
+
+void EncryptFile(const char *in, const char *out, const char *passPhrase)
+{
+	FileSource f(in, true, new DefaultEncryptorWithMAC(passPhrase, new FileSink(out)));	
+}
+
+void DecryptFile(const char *in, const char *out, const char *passPhrase)
+{
+	FileSource f(in, true, new DefaultDecryptorWithMAC(passPhrase, new FileSink(out)));
 }
