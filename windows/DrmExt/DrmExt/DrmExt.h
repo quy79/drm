@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0366 */
-/* at Wed Dec 14 19:49:18 2011
+/* at Thu Dec 15 12:26:16 2011
  */
 /* Compiler settings for .\DrmExt.idl:
     Oicf, W1, Zp8, env=Win64 (32b run)
@@ -85,7 +85,7 @@ EXTERN_C const IID IID_IDrmShlExt;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("5434D5CB-587F-427A-AEB5-02D31466B512")
+    MIDL_INTERFACE("5AD4DD46-7126-4A6C-9CAF-DE110F04E8D3")
     IDrmShlExt : public IUnknown
     {
     public:
@@ -156,7 +156,7 @@ EXTERN_C const CLSID CLSID_DrmShlExt;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("4650B2E6-1F31-4515-9A85-558B245611B3")
+class DECLSPEC_UUID("EDC76DD8-5EC8-4C7C-8C12-56F0EDBB5B4D")
 DrmShlExt;
 #endif
 #endif /* __DrmExtLib_LIBRARY_DEFINED__ */

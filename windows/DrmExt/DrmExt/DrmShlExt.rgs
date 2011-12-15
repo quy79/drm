@@ -2,7 +2,7 @@ HKCR
 {
 	NoRemove CLSID
 	{
-		ForceRemove {4650B2E6-1F31-4515-9A85-558B245611B3} = s 'DrmShlExt Class'
+		ForceRemove {EDC76DD8-5EC8-4C7C-8C12-56F0EDBB5B4D} = s 'DrmShlExt Class'
 		{
 			InprocServer32 = s '%MODULE%'
 			{
@@ -16,9 +16,8 @@ HKCR
 		{
 			NoRemove ContextMenuHandlers
 			{
-				ForceRemove DrmShlExt = s '{4650B2E6-1F31-4515-9A85-558B245611B3}'
+				ForceRemove DrmShlExt = s '{EDC76DD8-5EC8-4C7C-8C12-56F0EDBB5B4D}'
 			}
 		}
 	}
 }
-

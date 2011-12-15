@@ -54,18 +54,11 @@ StdAfx.h, StdAfx.cpp
 Resource.h
     This is the standard header file that defines resource IDs.
 
+
 /////////////////////////////////////////////////////////////////////////////
-Proxy/stub DLL project and module definition file:
+Other notes:
 
-DrmExtps.vcproj
-    This file is the project file for building a proxy/stub DLL if necessary.
-	The IDL file in the main project must contain at least one interface and you must 
-	first compile the IDL file before building the proxy/stub DLL.	This process generates
-	dlldata.c, DrmExt_i.c and DrmExt_p.c which are required
-	to build the proxy/stub DLL.
 
-DrmExtps.def
-    This module definition file provides the linker with information about the exports
-    required by the proxy/stub.
-
+	The MFC Support option builds the Microsoft Foundation Class libraries into your skeleton application,
+	making MFC classes, objects and functions available to you.
 /////////////////////////////////////////////////////////////////////////////

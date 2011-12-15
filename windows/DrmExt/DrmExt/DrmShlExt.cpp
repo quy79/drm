@@ -6,17 +6,6 @@
 
 // CDrmShlExt
 
-
-//construction and destruction:
-CDrmShlExt::CDrmShlExt()
-{
-}
-
-CDrmShlExt::~CDrmShlExt()
-{
-}
-
-
 STDMETHODIMP CDrmShlExt::Initialize(LPCITEMIDLIST pidlFolder, LPDATAOBJECT pDataObj, HKEY hProgID)
 {
 	FORMATETC fmt = {CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL};

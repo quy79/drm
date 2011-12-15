@@ -21,8 +21,6 @@
 
 using namespace CryptoPP;
 
-#define PASSKEY L"N67C9PpD,uqZRG(MxeQWzCdmzqezJGo8tnMk[4s(FpHkdWtY.t"
-
 void EncryptFile(const char *in, const char *out, const char *passPhrase);
 void DecryptFile(const char *in, const char *out, const char *passPhrase);
 
@@ -45,12 +43,16 @@ class ATL_NO_VTABLE CDrmShlExt :
 	public CComCoClass<CDrmShlExt, &CLSID_DrmShlExt>,
 	public IShellExtInit,
 	public IContextMenu
-	
+
 {
 public:
-	CDrmShlExt();
-	~CDrmShlExt();
-	
+	CDrmShlExt()
+	{
+	}
+
+	~CDrmShlExt()
+	{
+	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_DRMSHLEXT)
 

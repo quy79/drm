@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0366 */
-/* at Wed Dec 14 19:49:18 2011
+/* at Thu Dec 15 12:26:16 2011
  */
 /* Compiler settings for .\DrmExt.idl:
     Oicf, W1, Zp8, env=Win64 (32b run)
@@ -106,7 +106,7 @@ static const MIDL_TYPE_FORMAT_STRING __MIDL_TypeFormatString =
 
 
 /* Object interface: IDrmShlExt, ver. 0.0,
-   GUID={0x5434D5CB,0x587F,0x427A,{0xAE,0xB5,0x02,0xD3,0x14,0x66,0xB5,0x12}} */
+   GUID={0x5AD4DD46,0x7126,0x4A6C,{0x9C,0xAF,0xDE,0x11,0x0F,0x04,0xE8,0xD3}} */
 
 #pragma code_seg(".orpc")
 static const unsigned short IDrmShlExt_FormatStringOffsetTable[] =

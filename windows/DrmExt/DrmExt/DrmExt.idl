@@ -9,14 +9,14 @@ import "ocidl.idl";
 
 [
 	object,
-	uuid(5434D5CB-587F-427A-AEB5-02D31466B512),
+	uuid(5AD4DD46-7126-4A6C-9CAF-DE110F04E8D3),
 	helpstring("IDrmShlExt Interface"),
 	pointer_default(unique)
 ]
 interface IDrmShlExt : IUnknown{
 };
 [
-	uuid(07BF1E56-83B5-4A7F-ADFA-202C9F8DDBF9),
+	uuid(23420D46-BCA2-4BBB-B620-E930611EB716),
 	version(1.0),
 	helpstring("DrmExt 1.0 Type Library")
 ]
@@ -24,7 +24,7 @@ library DrmExtLib
 {
 	importlib("stdole2.tlb");
 	[
-		uuid(4650B2E6-1F31-4515-9A85-558B245611B3),
+		uuid(EDC76DD8-5EC8-4C7C-8C12-56F0EDBB5B4D),
 		helpstring("DrmShlExt Class")
 	]
 	coclass DrmShlExt
