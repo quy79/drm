@@ -1,9 +1,0 @@
-; DrmExt.def : Declares the module parameters.
-
-LIBRARY      "DrmExt.DLL"
-
-EXPORTS
-	DllCanUnloadNow		PRIVATE
-	DllGetClassObject	PRIVATE
-	DllRegisterServer	PRIVATE
-	DllUnregisterServer	PRIVATE
