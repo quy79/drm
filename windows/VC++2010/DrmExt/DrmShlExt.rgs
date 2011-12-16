@@ -1,0 +1,23 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {9F3119E3-1615-4036-AB7E-77F8DDC5DD08} = s 'DrmShlExt Class'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		}
+	}
+	NoRemove drmfile
+	{
+		NoRemove shellex
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove DrmShlExt = s '{9F3119E3-1615-4036-AB7E-77F8DDC5DD08}'
+			}
+		}
+	}
+}
